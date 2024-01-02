@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "109161445972",
+    "project_id": "shopaholic-5aa80",
+    "storage_bucket": "shopaholic-5aa80.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:109161445972:android:0e4ec5c5198f570f6a0bc1",
+        "android_client_info": {
+          "package_name": "com.raghava.shopaholic"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUq7YoNjXFVyZp-LpGuV9aiviLrYF4nZY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
