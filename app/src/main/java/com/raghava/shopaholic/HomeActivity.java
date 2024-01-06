@@ -4,26 +4,41 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.raghava.shopaholic.constant.Constant;
 import com.raghava.shopaholic.menuFiles.CartActivity;
 import com.raghava.shopaholic.menuFiles.SearchActivity;
 import com.raghava.shopaholic.menuFiles.baseActivity;
+import com.raghava.shopaholic.model.Product;
+import com.raghava.shopaholic.viewholder.ProductAdapter;
 import com.raghava.shopaholic.viewholder.SliderAdapter;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
+
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
 
 public class HomeActivity extends baseActivity {
 
@@ -62,17 +77,21 @@ public class HomeActivity extends baseActivity {
 
         getSupportActionBar().hide();
 
-        init_views();
-
         storage = FirebaseStorage.getInstance();
 
-        toolbar.setBackgroundColor(R.drawable.toolbar_bg);
+        dynamicContent = (LinearLayout) findViewById(R.id.dynamicContent);
+        bottonNavBar = (LinearLayout) findViewById(R.id.bottomNavBar);
 
         View wizard = getLayoutInflater().inflate(R.layout.activity_home, null);
         dynamicContent.addView(wizard);
 
+        rg = findViewById(R.id.radioGroup1);
+        rb = findViewById(R.id.bottom_home);
         rb.setBackgroundColor(R.color.item_selected);
         rb.setTextColor(Color.parseColor("#3F51B5"));
+
+        // Slider View
+        sliderView = findViewById(R.id.image_slider);
 
         SliderAdapter sliderAdapter = new SliderAdapter(images);
 
@@ -80,6 +99,22 @@ public class HomeActivity extends baseActivity {
         sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
         sliderView.setSliderTransformAnimation(SliderAnimations.DEPTHTRANSFORMATION);
         sliderView.startAutoCycle();
+
+        // Deals of the Day
+        product1 = findViewById(R.id.product1);
+        product2 = findViewById(R.id.product2);
+        product3 = findViewById(R.id.product3);
+        product4 = findViewById(R.id.product4);
+
+        prod1Name = findViewById(R.id.prod1name);
+        prod2Name = findViewById(R.id.prod2name);
+        prod3Name = findViewById(R.id.prod3name);
+        prod4Name = findViewById(R.id.prod4name);
+
+        prod1Price = findViewById(R.id.prod1price);
+        prod2Price = findViewById(R.id.prod2price);
+        prod3Price = findViewById(R.id.prod3price);
+        prod4Price = findViewById(R.id.prod4price);
 
         product1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,6 +168,11 @@ public class HomeActivity extends baseActivity {
             }
         });
 
+        viewAll = findViewById(R.id.viewAllProducts);
+        home_cart = findViewById(R.id.home_cart);
+
+        lv = findViewById(R.id.productslist);
+
         viewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,38 +189,69 @@ public class HomeActivity extends baseActivity {
         });
 
 
+        // Top products !!
+        ProductAdapter productAdapter = new ProductAdapter(this);
+        productAdapter.updateProducts(Constant.PRODUCT_LIST);
+
+        lv.setAdapter(productAdapter);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Product product = Constant.PRODUCT_LIST.get(position);
+                Intent intent = new Intent(HomeActivity.this, ProductDetails.class);
+                intent.putExtra("id", 3);
+                intent.putExtra("uniqueId", product.getpName());
+                intent.putExtra("name", product.getpName());
+                intent.putExtra("description", product.getpDescription());
+                intent.putExtra("category", "Smartphone");
+                intent.putExtra("pprice", Constant.CURRENCY +
+                        String.valueOf(product.getpPrice().setScale(0, BigDecimal.ROUND_HALF_UP)));
+                intent.putExtra("imageName", product.getpImageName());
+                Log.d("TAG", "View product: " + product.getpName());
+                startActivity(intent);
+            }
+        });
+
+//        addingToProdList();
+
     }
 
-    private void init_views(){
-        dynamicContent = (LinearLayout) findViewById(R.id.dynamicContent);
-        bottonNavBar = (LinearLayout) findViewById(R.id.bottomNavBar);
+    private void addingToProdList(){
+        String currDate,currTime;
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+        currDate = dateFormat.format(calendar.getTime());
 
-        rg = findViewById(R.id.radioGroup1);
-        rb = findViewById(R.id.bottom_home);
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:MM:ss a");
+        currTime = timeFormat.format(calendar.getTime());
 
-        sliderView = findViewById(R.id.image_slider);
-        toolbar = findViewById(R.id.toolbar);
+        DatabaseReference prodListRef = FirebaseDatabase.getInstance().getReference().child("View All");
+        String name = prod1Name.getText().toString().replaceAll("\n"," ").replaceAll(".",",");
 
-        product1 = findViewById(R.id.product1);
-        product2 = findViewById(R.id.product2);
-        product3 = findViewById(R.id.product3);
-        product4 = findViewById(R.id.product4);
+        final HashMap<String,Object> prodMap = new HashMap<>();
+        prodMap.put("date", currDate);
+        prodMap.put("time", currTime);
+        prodMap.put("pid",name);
+        prodMap.put("name",name);
+        prodMap.put("price","49,000");
+        prodMap.put("category","smartPhone");
+        prodMap.put("description","Display: 6.1 Inches with a resolution of 1792 x 828 Pixels and pixel density\n" +
+                "Memory: 4 GB RAM and 128 GB internal memory\n" +
+                "Color options: White\n" +
+                "Battery Capacity: 3110 mAh battery");
 
-        prod1Name = findViewById(R.id.prod1name);
-        prod2Name = findViewById(R.id.prod2name);
-        prod3Name = findViewById(R.id.prod3name);
-        prod4Name = findViewById(R.id.prod4name);
+        prodListRef.child("user View").child("products").
+                child(name).updateChildren(prodMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(Task<Void> task) {
+                        Log.i("added: ",name);
+                        Toast.makeText(HomeActivity.this, "added: "+name, Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-        prod1Price = findViewById(R.id.prod1price);
-        prod2Price = findViewById(R.id.prod2price);
-        prod3Price = findViewById(R.id.prod3price);
-        prod4Price = findViewById(R.id.prod4price);
-
-        viewAll = findViewById(R.id.viewAllProducts);
-        home_cart = findViewById(R.id.home_cart);
-
-        lv = findViewById(R.id.productslist);
     }
-
 
 }

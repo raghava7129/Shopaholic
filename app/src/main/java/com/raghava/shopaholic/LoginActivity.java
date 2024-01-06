@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
@@ -68,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, "Enter valid data", Toast.LENGTH_SHORT).show();
         }
         else if(!email.matches(emailPattern)){
+            progressDialog.dismiss();
             emailEditText.setError("Invalid Email");
             Toast.makeText(LoginActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
         }

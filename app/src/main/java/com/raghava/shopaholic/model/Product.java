@@ -1,4 +1,4 @@
-package com.raghava.shopaholic;
+package com.raghava.shopaholic.model;
 
 import java.math.BigDecimal;
 
@@ -13,8 +13,36 @@ public class Product {
         super();
     }
 
+    public Product(int pId, String pName, BigDecimal pPrice, String pDescription, String pImageName) {
+        setpId(pId);
+        setpName(pName);
+        setpPrice(pPrice);
+        setpDescription(pDescription);
+        setpImageName(pImageName);
+    }
+
     public void setpId(int pId) {
         this.pId = pId;
+    }
+
+    public int getpId() {
+        return pId;
+    }
+
+    public String getpName() {
+        return pName;
+    }
+
+    public BigDecimal getpPrice() {
+        return pPrice;
+    }
+
+    public String getpDescription() {
+        return pDescription;
+    }
+
+    public String getpImageName() {
+        return pImageName;
     }
 
     public void setpName(String pName) {
@@ -31,13 +59,6 @@ public class Product {
 
     public void setpImageName(String pImageName) {
         this.pImageName = pImageName;
-    }
-
-    public Product(int pId, String pName, String pDescription, String pImageName){
-        setpId(pId);
-        setpName(pName);
-        setpDescription(pDescription);
-        setpImageName(pImageName);
     }
 
 }
