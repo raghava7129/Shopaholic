@@ -119,11 +119,13 @@ public class HomeActivity extends baseActivity {
         product1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              Intent i = new Intent(HomeActivity.this,productActivity.class);
+              Intent i = new Intent(HomeActivity.this,ProductDetails.class);
               i.putExtra("name",prod1Name.getText().toString());
                 i.putExtra("price", prod1Price.getText().toString());
                 i.putExtra("uniqueId", prod1Name.getText().toString());
+                i.putExtra("description","Display: 6.1 Inches with a resolution of 1792 x 828 Pixels and pixel density, Memory: 4 GB RAM and 128 GB internal memory, Color options: White, Battery Capacity:: 3110 mAh battery");
                 i.putExtra("id", 1);
+                i.putExtra("category", "smartPhone");
               startActivity(i);
               overridePendingTransition(0, 0);
             }
@@ -132,11 +134,13 @@ public class HomeActivity extends baseActivity {
         product2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(HomeActivity.this,productActivity.class);
+                Intent i = new Intent(HomeActivity.this,ProductDetails.class);
                 i.putExtra("name",prod2Name.getText().toString());
                 i.putExtra("price", prod2Price.getText().toString());
                 i.putExtra("uniqueId", prod2Name.getText().toString());
+                i.putExtra("description","16-core Neural Engine, 38.91 cm (15.3-inch) Liquid Retina display with True Tone, 1080p FaceTime HD camera, MagSafe 3 charging port, Two Thunderbolt / USB 4 ports, Magic Keyboard with Touch ID, Force Touch trackpad, 35W Dual USB-C Port Power Adapter");
                 i.putExtra("id", 2);
+                i.putExtra("category", "laptops");
                 startActivity(i);
                 overridePendingTransition(0, 0);
             }
@@ -145,11 +149,13 @@ public class HomeActivity extends baseActivity {
         product3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(HomeActivity.this,productActivity.class);
+                Intent i = new Intent(HomeActivity.this,ProductDetails.class);
                 i.putExtra("name",prod3Name.getText().toString());
                 i.putExtra("price", prod3Price.getText().toString());
                 i.putExtra("uniqueId", prod3Name.getText().toString());
+                i.putExtra("description","DCI-P3 93% Colour Gamut 64-bit Powerful Processor Android TV 9.0 OxygenPlay Bezel-Less Design");
                 i.putExtra("id", 1);
+                i.putExtra("category", "TV");
                 startActivity(i);
                 overridePendingTransition(0, 0);
             }
@@ -158,11 +164,13 @@ public class HomeActivity extends baseActivity {
         product4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(HomeActivity.this,productActivity.class);
+                Intent i = new Intent(HomeActivity.this,ProductDetails.class);
                 i.putExtra("name",prod4Name.getText().toString());
                 i.putExtra("price", prod4Price.getText().toString());
                 i.putExtra("uniqueId", prod4Name.getText().toString());
+                i.putExtra("description","Black/University Red - white , Original release : August 2016 , Designed by Tate kuerbis");
                 i.putExtra("id", 2);
+                i.putExtra("category", "Shoes");
                 startActivity(i);
                 overridePendingTransition(0, 0);
             }
