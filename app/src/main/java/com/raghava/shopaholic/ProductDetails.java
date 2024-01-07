@@ -97,13 +97,13 @@ public class ProductDetails extends AppCompatActivity {
             String checkName = intent.getStringExtra("name").replace("\n"," ");
             if(checkName.equals("Apple MacBook Air")){
                 productName.setText(intent.getStringExtra("name").replaceAll("\n"," "));
-                productPrice.setText(intent.getStringExtra("pprice"));
+                productPrice.setText(intent.getStringExtra("price"));
                 productDesc.setText(intent.getStringExtra("description"));
                 productImg.setImageResource(R.drawable.prod2);
             }
             else{
                 productName.setText(intent.getStringExtra("name").replaceAll("\n"," "));
-                productPrice.setText(intent.getStringExtra("pprice"));
+                productPrice.setText(intent.getStringExtra("price"));
                 productDesc.setText(intent.getStringExtra("description"));
                 productImg.setImageResource(R.drawable.prod4);
             }
@@ -159,6 +159,7 @@ public class ProductDetails extends AppCompatActivity {
         cartMap.put("time",currTime);
         cartMap.put("pid",productName.getText().toString());
         cartMap.put("name",productName.getText().toString());
+        cartMap.put("price",productPrice.getText().toString());
 
         cartListRef.child("user View").child(auth.getCurrentUser().getUid()).child("Products")
                 .child(uniqueId).updateChildren(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -218,7 +219,8 @@ public class ProductDetails extends AppCompatActivity {
                     @NotNull
                     @Override
                     public RelatedProductsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.related_products_adapter, parent, false);
+                        View view = LayoutInflater.from(parent.getContext()).
+                                inflate(R.layout.related_products_adapter, parent, false);
                         RelatedProductsHolder holder = new RelatedProductsHolder(view);
                         return holder;
                     }
