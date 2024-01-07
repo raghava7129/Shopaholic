@@ -183,7 +183,7 @@
                                 android:id="@+id/prod2name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="42dp"
-                                android:text="Apple MacBook Air\n13.6"
+                                android:text="Apple MacBook Air"
                                 android:textColor="@color/black"
                                 android:textSize="13dp" />
 

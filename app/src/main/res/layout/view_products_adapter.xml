@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="110dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="5dp"
+    android:minHeight="50dp"
+    android:orientation="horizontal"
+    android:weightSum="1">
+
+    <ImageView
+        android:id="@+id/prodImg"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        tools:src="@drawable/prod2"
+        android:gravity="center"
+        />
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="0.75"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        android:weightSum="1"
+        >
+
+        <TextView
+            android:id="@+id/prodName"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            tools:text="Apple MacBook Air"
+            android:textSize="20dp"
+            android:fontFamily="casual"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/prodPrice"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            tools:text="₹81,000"
+            android:textSize="20dp"
+            android:fontFamily="casual"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            />
+
+    </LinearLayout>
+
+
+</LinearLayout>
