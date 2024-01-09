@@ -3,17 +3,238 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/myPage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".menuFiles.ProfileActivity">
+    tools:context=".menuFiles.ProfileActivity"
+    android:layout_marginBottom="50dp"
+    android:background="@color/white"
+    >
 
-    <TextView
+    <Toolbar
+        android:id="@+id/profiletoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/toolbar_bg"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/profileBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/back"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="My Profile"
+                android:textSize="40dp"
+                android:textStyle="bold"
+                android:fontFamily="cursive"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:textColor="#C5C2C2"
+                />
+
+        </LinearLayout>
+
+    </Toolbar>
+
+    <ScrollView
+        android:id="@+id/scroolView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Profile Page"
-        android:textSize="30sp"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:gravity="center"
-        />
+        android:layout_below="@+id/profiletoolbar"
+
+        >
+
+        <LinearLayout
+            android:id="@+id/detailsBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profiletoolbar"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:background="@drawable/edittextshape"
+            android:orientation="vertical"
+            android:padding="7dp">
+
+            <ImageView
+                android:id="@+id/done"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/save_logo" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Hello, "
+                    android:textColor="@color/black"
+                    android:textSize="23dp" />
+
+                <TextView
+                    android:id="@+id/displayUsername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Shopaholic"
+                    android:textColor="@color/black"
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:padding="20dp">
+
+                <ImageView
+                    android:id="@+id/profileImage_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="95dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:background="@drawable/search_bar_bg"
+                    android:gravity="center" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profileImage"
+                    android:layout_width="78dp"
+                    android:layout_height="82dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:layout_marginBottom="7dp"
+                    android:background="@drawable/logo_round_icon"
+                    android:gravity="center"
+                    android:src="@drawable/profile_pic_logo" />
+
+
+                <TextView
+                    android:id="@+id/username_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/profileImage_bg"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="casual"
+                    android:text="Username"
+                    android:textColor="@color/black"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+
+                    />
+
+                <EditText
+                    android:id="@+id/profileUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/username_title"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/animate_bg"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:hint="User name"
+                    android:inputType=
+                        "textCapSentences|textAutoCorrect"
+                    android:padding="10dp"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textColorHint="#AE636363" />
+
+                <TextView
+                    android:id="@+id/email_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/profileUsername"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="casual"
+                    android:text="Email"
+                    android:textColor="@color/black"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+
+
+                <EditText
+                    android:id="@+id/profileEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/email_title"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/animate_bg"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:hint="Email"
+                    android:inputType="textCapSentences|textAutoCorrect|textEmailAddress"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/profileEmail"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="50dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/profileHistory"
+                        android:layout_width="0dip"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="0.45"
+                        android:background="@drawable/search_bar_bg"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:text="Your Orders"
+                        android:textColor="@color/black"
+                        android:textSize="22sp" />
+
+                    <Space
+                        android:id="@+id/space"
+                        android:layout_width="0dip"
+                        android:layout_height="50dp"
+                        android:layout_weight="0.1" />
+
+
+                    <TextView
+                        android:id="@+id/profileLogout"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="0.45"
+                        android:background="@drawable/search_bar_bg"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="Logout"
+                        android:textColor="@color/black"
+                        android:textSize="22sp" />
+
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

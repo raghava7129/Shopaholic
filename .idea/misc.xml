@@ -4,8 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1225" />
+        <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/animate_bg.xml" value="0.134" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/back.xml" value="0.134" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/confirm_btn.xml" value="0.134" />
+        <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/dialog_cart.xml" value="0.134" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/edittextshape.xml" value="0.1245" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1225" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/intro_signin.xml" value="0.1245" />
@@ -17,10 +19,14 @@
         <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/menu_icon_mycart.xml" value="0.134" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/menu_icon_profile.xml" value="0.134" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/menu_icon_search.xml" value="0.134" />
+        <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/no_btn_bg.xml" value="0.134" />
+        <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/not_focus.xml" value="0.134" />
+        <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/prof_bg_selector.xml" value="0.134" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/search_bar_bg.xml" value="0.134" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/search_btn.xml" value="0.134" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/search_btn_bg.xml" value="0.134" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/toolbar_bg.xml" value="0.134" />
+        <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/yes_btn_bg.xml" value="0.134" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/activity_add_product.xml" value="0.264" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/activity_base.xml" value="0.2" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/activity_cart.xml" value="0.2" />
@@ -31,11 +37,13 @@
         <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/activity_product.xml" value="0.1936725096194955" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/activity_product_adapter.xml" value="0.20436083796494228" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/activity_product_details.xml" value="0.4" />
-        <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/activity_profile.xml" value="0.1936725096194955" />
+        <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/activity_profile.xml" value="0.136" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/activity_register.xml" value="0.2359375" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/activity_search.xml" value="0.2" />
+        <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/activity_show_history.xml" value="0.20521590423257802" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/activity_splash_screen.xml" value="0.264" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/cart_items_layout.xml" value="0.20436083796494228" />
+        <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/dialog_view.xml" value="0.4" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/image_slider_layout_item.xml" value="0.20436083796494228" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/related_products_adapter.xml" value="0.20436083796494228" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/view_products_adapter.xml" value="0.20436083796494228" />

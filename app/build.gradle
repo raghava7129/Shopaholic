@@ -57,6 +57,10 @@ dependencies {
     //firebase recylcer adapter
     implementation 'com.firebaseui:firebase-ui-database:6.0.2'
 
+    // https://mvnrepository.com/artifact/de.hdodenhof/circleimageview
+    implementation group: 'de.hdodenhof', name: 'circleimageview', version: '3.1.0'
+
+
 
 
 
