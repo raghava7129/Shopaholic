@@ -25,6 +25,7 @@
         <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/search_bar_bg.xml" value="0.134" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/search_btn.xml" value="0.134" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/search_btn_bg.xml" value="0.134" />
+        <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/shipping_details_bg.xml" value="0.134" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/toolbar_bg.xml" value="0.134" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/drawable/yes_btn_bg.xml" value="0.134" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/activity_add_product.xml" value="0.264" />
@@ -45,6 +46,7 @@
         <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/cart_items_layout.xml" value="0.20436083796494228" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/dialog_view.xml" value="0.4" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/image_slider_layout_item.xml" value="0.20436083796494228" />
+        <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/order_history.xml" value="0.20436083796494228" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/related_products_adapter.xml" value="0.20436083796494228" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/layout/view_products_adapter.xml" value="0.20436083796494228" />
         <entry key="..\:/codes/Shopaholic/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1225" />

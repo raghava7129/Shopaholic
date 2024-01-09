@@ -67,6 +67,8 @@ public class ProfileActivity extends baseActivity {
     String emailid;
 
     RelativeLayout myPage;
+    StorageReference storageReference;
+    DatabaseReference reference;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -102,9 +104,14 @@ public class ProfileActivity extends baseActivity {
         database = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance();
 
-        DatabaseReference reference = database.getReference().child("users").
-                child(Objects.requireNonNull(auth.getCurrentUser()).getUid());
-        StorageReference storageReference = storage.getReference().child("upload").child(auth.getCurrentUser().getUid());
+        if(auth.getCurrentUser() != null) {
+            reference = database.getReference().child("users").
+                    child(Objects.requireNonNull(auth.getCurrentUser()).getUid());
+            storageReference = storage.getReference().child("upload").child(auth.getCurrentUser().getUid());
+        }
+        else{
+            Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show();
+        }
 
 
         progressDialog = new ProgressDialog(ProfileActivity.this);

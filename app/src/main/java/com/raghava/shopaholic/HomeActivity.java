@@ -262,4 +262,10 @@ public class HomeActivity extends baseActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
+        System.exit(0);
+    }
 }

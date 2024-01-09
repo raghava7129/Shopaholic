@@ -1,11 +1,11 @@
 package com.raghava.shopaholic;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class introActivity extends AppCompatActivity {
 
@@ -22,6 +22,7 @@ public class introActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(introActivity.this,LoginActivity.class));
+                overridePendingTransition(0,0);
             }
         });
 
@@ -29,6 +30,7 @@ public class introActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(introActivity.this,RegisterActivity.class));
+                overridePendingTransition(0,0);
             }
         });
 

@@ -65,8 +65,6 @@ public class CartActivity extends baseActivity {
         progressDialog.setMessage("Please wait...");
         progressDialog.setCancelable(false);
 
-        auth = FirebaseAuth.getInstance();
-
         dynamicContent = (LinearLayout) findViewById(R.id.dynamicContent);
         bottonNavBar = (LinearLayout) findViewById(R.id.bottomNavBar);
 
@@ -79,6 +77,8 @@ public class CartActivity extends baseActivity {
         rb.setTextColor(Color.parseColor("#3F51B5"));
 
         init_view();
+
+        auth = FirebaseAuth.getInstance();
 
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(CartActivity.this);

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -112,6 +111,8 @@ public class RegisterActivity extends AppCompatActivity {
                                 if(task.isSuccessful()){
                                     progressDialog.dismiss();
                                     startActivity(new Intent(RegisterActivity.this,HomeActivity.class));
+                                    overridePendingTransition(0,0);
+                                    finish();
                                 }
                                 else{
                                     progressDialog.dismiss();

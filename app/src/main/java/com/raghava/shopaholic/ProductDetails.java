@@ -161,19 +161,24 @@ public class ProductDetails extends AppCompatActivity {
         cartMap.put("name",productName.getText().toString());
         cartMap.put("price",productPrice.getText().toString());
 
-        cartListRef.child("user View").child(auth.getCurrentUser().getUid()).child("Products")
-                .child(uniqueId).updateChildren(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(Task<Void> task) {
-                        if(task.isSuccessful()){
-                            progressDialog.dismiss();
-                            Toast.makeText(ProductDetails.this, "Added to Cart", Toast.LENGTH_SHORT).show();
-                            Intent intentcart= new Intent(ProductDetails.this, HomeActivity.class);
-                            intentcart.putExtra("cartadd","yes");
-                            startActivity(intentcart);
+        if(auth.getCurrentUser() != null) {
+            cartListRef.child("user View").child(auth.getCurrentUser().getUid()).child("Products")
+                    .child(uniqueId).updateChildren(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                progressDialog.dismiss();
+                                Toast.makeText(ProductDetails.this, "Added to Cart", Toast.LENGTH_SHORT).show();
+                                Intent intentcart = new Intent(ProductDetails.this, HomeActivity.class);
+                                intentcart.putExtra("cartadd", "yes");
+                                startActivity(intentcart);
+                            }
                         }
-                    }
-                });
+                    });
+        }
+        else{
+            Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
