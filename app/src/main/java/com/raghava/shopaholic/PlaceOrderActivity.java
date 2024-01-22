@@ -1,9 +1,19 @@
 package com.raghava.shopaholic;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -11,8 +21,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +44,8 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 public class PlaceOrderActivity extends AppCompatActivity implements PaymentResultListener {
 
@@ -40,6 +59,14 @@ public class PlaceOrderActivity extends AppCompatActivity implements PaymentResu
     FirebaseAuth auth;
     Intent intent;
 
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private LatLng lastLatLng;
+    private ProgressDialog progressDialog;
+
+    private final static int REQUEST_CODE = 0;
+    String setErrorString = "";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +74,63 @@ public class PlaceOrderActivity extends AppCompatActivity implements PaymentResu
 
         init_views();
 
+        progressDialog = new ProgressDialog(PlaceOrderActivity.this);
+        progressDialog.setMessage("please wait...");
+        progressDialog.setCancelable(false);
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_CODE);
+        }
+
         getSupportActionBar().hide();
+
+        if(isInternetConnected()){
+
+            if(isLocationEnabled(this)){
+
+//                Toast.makeText(this, "inside if - 2", Toast.LENGTH_SHORT).show();
+
+                if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    LatLng lastLatLng = getLastLatLng();
+
+//                    if(lastLatLng!=null){
+//                        Toast.makeText(this, "got LatLng", Toast.LENGTH_SHORT).show();
+//                        String address = getAddressFromLatLng(lastLatLng);
+//                        if(address != null){
+//                            Toast.makeText(this, "got Address", Toast.LENGTH_SHORT).show();
+//                            shipAddress.setText("hey!!");
+//                        }
+//                        else{
+//                            Toast.makeText(this, "Fill Address manually", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                    else{
+//                        Toast.makeText(this, "LatLng null !!", Toast.LENGTH_SHORT).show();
+//                    }
+                }
+
+            }else{
+                Intent i = new Intent(PlaceOrderActivity.this,address_error_handling.class);
+                i.putExtra("errorCode",0);
+                startActivity(i);
+                overridePendingTransition(0, 0);
+                finish();
+            }
+
+        }else{
+            Intent i = new Intent(PlaceOrderActivity.this,address_error_handling.class);
+            i.putExtra("errorCode",1);
+            startActivity(i);
+            overridePendingTransition(0, 0);
+            finish();
+        }
+
+
 
         auth = FirebaseAuth.getInstance();
         intent = getIntent();
@@ -66,8 +149,111 @@ public class PlaceOrderActivity extends AppCompatActivity implements PaymentResu
             }
         });
 
-
     }
+
+    private String getAddressFromLatLng(LatLng lastLatLng) {
+        List<Address> addressList;
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        String location = "";
+
+        progressDialog.show();
+        try{
+
+            addressList = geocoder.getFromLocation(lastLatLng.latitude,lastLatLng.longitude,1);
+            if (addressList != null && addressList.size() > 0) {
+                Address address = addressList.get(0);
+
+                shipCity.setText(address.getLocality());
+                if(address.getSubThoroughfare()!=null){
+                    location+=address.getSubThoroughfare()+" ,";
+
+                }
+                else{
+                    setErrorString+= "Your Building number ,";
+                }
+                if(address.getPremises()!=null){
+                    location += address.getPremises()+" ,";
+
+                }
+                else{
+                    setErrorString+= "Your building name ,";
+                }
+                if(address.getThoroughfare()!=null){
+                    location += address.getThoroughfare()+" ,";
+
+                }
+                else{
+                    setErrorString+= "Your street name ";
+                }
+
+                location+= address.getLocality()+ " ,"+address.getAdminArea()+" ,"+
+                                address.getPostalCode()+" ,"+address.getCountryName();
+
+                return location;
+            }
+            progressDialog.dismiss();
+        }catch(Exception e){
+            Log.e("GeoCoder Error : ",e.toString());
+            Toast.makeText(this, "Please fill the Address manually", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+        }
+        return null;
+    }
+
+    private LatLng getLastLatLng() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+
+                progressDialog.show();
+            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    if(location != null) {
+//                        Toast.makeText(PlaceOrderActivity.this, location.getLatitude()+" , "+location.getLongitude(), Toast.LENGTH_SHORT).show();
+                        lastLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+                        shipAddress.setText(getAddressFromLatLng(lastLatLng));
+                        if(!setErrorString.equals("")) {
+
+                            setErrorString = "add "+setErrorString+ " too!!";
+                            shipAddress.setError(setErrorString);
+
+                            Toast.makeText(PlaceOrderActivity.this, setErrorString, Toast.LENGTH_SHORT).show();
+                        }
+
+                        progressDialog.dismiss();
+                    } else {
+                        progressDialog.dismiss();
+                        Toast.makeText(PlaceOrderActivity.this, "getLastLng success (location null)", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e("Location : ", "Error getting location: " + e.getMessage());
+                    Toast.makeText(PlaceOrderActivity.this, "Error getting location: " +
+                            e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            return lastLatLng;
+        }
+        return lastLatLng;
+    }
+
+    private boolean isInternetConnected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+    }
+
+    private static boolean isLocationEnabled(Context context) {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
 
     private void check() {
         if(TextUtils.isEmpty(shipName.getText().toString())){

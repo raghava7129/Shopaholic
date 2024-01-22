@@ -70,6 +70,7 @@ public class ProfileActivity extends baseActivity {
     StorageReference storageReference;
     DatabaseReference reference;
 
+
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
