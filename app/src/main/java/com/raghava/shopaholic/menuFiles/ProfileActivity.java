@@ -37,6 +37,7 @@ import com.raghava.shopaholic.HomeActivity;
 import com.raghava.shopaholic.LoginActivity;
 import com.raghava.shopaholic.R;
 import com.raghava.shopaholic.ShowHistory;
+import com.raghava.shopaholic.favorite_list;
 import com.raghava.shopaholic.model.Users;
 import com.squareup.picasso.Picasso;
 
@@ -57,7 +58,8 @@ public class ProfileActivity extends baseActivity {
 
     CircleImageView profileImg;
     ImageView profileBack;
-    TextView profileLogout,displayUsername,profileHistory;
+    TextView displayUsername,profileHistory,favBtn;
+    ImageView profileLogout;
     FirebaseAuth auth;
     FirebaseDatabase database;
     FirebaseStorage storage;
@@ -97,6 +99,7 @@ public class ProfileActivity extends baseActivity {
         displayUsername = findViewById(R.id.displayUsername);
         profileHistory = findViewById(R.id.profileHistory);
         done = findViewById(R.id.done);
+        favBtn = findViewById(R.id.favListBtn);
 
         myPage = findViewById(R.id.myPage);
 
@@ -125,6 +128,15 @@ public class ProfileActivity extends baseActivity {
             public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i,1);
+            }
+        });
+
+        favBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProfileActivity.this, favorite_list.class));
+                overridePendingTransition(0, 0);
+
             }
         });
 

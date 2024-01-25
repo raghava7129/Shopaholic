@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,9 +40,12 @@ import java.util.Objects;
 
 public class CartActivity extends baseActivity {
 
+    ProgressDialog dialog;
+
     LinearLayout dynamicContent,bottonNavBar;
     RadioGroup rg;
     RadioButton rb;
+    CardView no_item_view;
 
     FirebaseAuth auth;
 
@@ -60,6 +64,10 @@ public class CartActivity extends baseActivity {
         //setContentView(R.layout.activity_cart);
 
         getSupportActionBar().hide();
+
+        dialog = new ProgressDialog(this);
+        dialog.setCancelable(false);
+        dialog.setMessage("please wait...");
 
         progressDialog = new ProgressDialog(CartActivity.this);
         progressDialog.setMessage("Please wait...");
@@ -99,6 +107,7 @@ public class CartActivity extends baseActivity {
                 }
             }
         });
+        onStart();
     }
 
     @Override
@@ -175,6 +184,27 @@ public class CartActivity extends baseActivity {
                 CartViewHolder holder = new CartViewHolder(view);
                 return holder;
             }
+
+            @Override
+            public int getItemCount() {
+                int itemCount = super.getItemCount();
+
+                return itemCount;
+            }
+
+            @Override
+            public void onDataChanged() {
+                super.onDataChanged();
+
+                int itemCount = getItemCount();
+
+                if (itemCount == 0) {
+                    no_item_view.setVisibility(View.VISIBLE);
+                } else {
+                    no_item_view.setVisibility(View.GONE);
+                }
+            }
+
         };
 
         recyclerView.setAdapter(adapter);
@@ -185,5 +215,6 @@ public class CartActivity extends baseActivity {
         recyclerView = findViewById(R.id.cart_list);
         nextBtn = findViewById(R.id.next_button);
         totalprice=findViewById(R.id.totalprice);
+        no_item_view = findViewById(R.id.no_item_view);
     }
 }

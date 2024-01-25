@@ -152,6 +152,20 @@
                 android:textColor="@color/black"
                 android:textSize="18dp"/>
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/addToFavBtn"
+                android:layout_width="340dp"
+                android:layout_height="50dp"
+                android:background="@drawable/fav_bg"
+                android:text="Add to Favorite List"
+                android:textStyle="bold"
+                android:fontFamily="cursive"
+                android:elevation="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="30dp"
+                android:textColor="@color/black"
+                android:textSize="18dp"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

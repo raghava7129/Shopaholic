@@ -32,6 +32,30 @@
         android:layout_below="@id/cart_toolbar"
         android:padding="10dp" />
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/no_item_view"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_centerVertical="true"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:elevation="40dp"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:background="@drawable/no_items_view"
+            android:text="Nothing to see here."
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-black"
+            android:textColor="@color/white"
+            />
+
+    </androidx.cardview.widget.CardView>
+
     <LinearLayout
         android:id="@+id/llTotal"
         android:layout_width="match_parent"
@@ -94,5 +118,7 @@
             android:textStyle="bold"
             />
     </LinearLayout>
+
+
 
 </RelativeLayout>

@@ -21,18 +21,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="1"
+            >
 
             <ImageView
                 android:id="@+id/profileBack"
-                android:layout_width="40dp"
+                android:layout_width="0dip"
                 android:layout_height="40dp"
+                android:layout_weight="0.1"
                 android:src="@drawable/back"
                 android:layout_gravity="center_vertical"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dip"
                 android:layout_height="50dp"
+                android:layout_weight="0.7"
                 android:text="My Profile"
                 android:textSize="40dp"
                 android:textStyle="bold"
@@ -42,17 +46,26 @@
                 android:textColor="#C5C2C2"
                 />
 
+            <ImageView
+                android:id="@+id/profileLogout"
+                android:layout_width="0dip"
+                android:layout_height="60dp"
+                android:layout_weight="0.2"
+                android:src="@drawable/logout_logo_1"
+                android:layout_gravity="center_vertical"
+                />
+
         </LinearLayout>
 
     </Toolbar>
+
 
     <ScrollView
         android:id="@+id/scroolView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/profiletoolbar"
+        android:layout_below="@+id/profiletoolbar">
 
-        >
 
         <LinearLayout
             android:id="@+id/detailsBox"
@@ -153,8 +166,7 @@
                     android:background="@drawable/animate_bg"
                     android:fontFamily="sans-serif-condensed-medium"
                     android:hint="User name"
-                    android:inputType=
-                        "textCapSentences|textAutoCorrect"
+                    android:inputType="textCapSentences|textAutoCorrect"
                     android:padding="10dp"
                     android:text=""
                     android:textColor="@color/black"
@@ -219,16 +231,16 @@
 
 
                     <TextView
-                        android:id="@+id/profileLogout"
+                        android:id="@+id/favListBtn"
                         android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_height="50dp"
                         android:layout_weight="0.45"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Favorite List"
                         android:background="@drawable/search_bar_bg"
                         android:fontFamily="sans-serif"
                         android:gravity="center"
                         android:padding="10dp"
-                        android:text="Logout"
                         android:textColor="@color/black"
                         android:textSize="22sp" />
 

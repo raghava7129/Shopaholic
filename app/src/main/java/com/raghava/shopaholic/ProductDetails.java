@@ -33,13 +33,15 @@ import org.jetbrains.annotations.NotNull;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.Objects;
 
 public class ProductDetails extends AppCompatActivity {
 
     Intent intent;
     ImageView productImg;
     TextView productName, productCategory, productDesc, productPrice;
-    AppCompatButton order;
+    AppCompatButton order,addFavBtn;
     Toolbar detailsToolbar;
 
     ProgressDialog progressDialog;
@@ -139,7 +141,17 @@ public class ProductDetails extends AppCompatActivity {
             }
         });
 
-        onStart();
+        addFavBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog.show();
+                addingToFavList();
+            }
+        });
+
+
+
+//        onStart();
 
     }
 
@@ -182,6 +194,31 @@ public class ProductDetails extends AppCompatActivity {
 
     }
 
+    private void addingToFavList(){
+        final DatabaseReference favListRef = FirebaseDatabase.getInstance().getReference().child("users").
+                child(Objects.requireNonNull(auth.getCurrentUser()).getUid()).child("Favorite List");
+
+        final HashMap<String,Object> favMap = new HashMap<>();
+        favMap.put("name",productName.getText().toString());
+        favMap.put("price",productPrice.getText().toString());
+
+        if(auth.getCurrentUser() != null) {
+            favListRef.child(uniqueId).updateChildren(favMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                progressDialog.dismiss();
+                                Toast.makeText(ProductDetails.this, "Added to Favorite List", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
+        else{
+            Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -189,8 +226,12 @@ public class ProductDetails extends AppCompatActivity {
         final DatabaseReference prodListRef = FirebaseDatabase.getInstance().getReference().child("View All")
                 .child("user View").child("Products");
 
+//        Toast.makeText(this, "category: "+relCategory, Toast.LENGTH_SHORT).show();
+
         FirebaseRecyclerOptions<AddProdModel> options = new FirebaseRecyclerOptions.Builder<AddProdModel>()
-                .setQuery(prodListRef.orderByChild("category").startAt(relCategory), AddProdModel.class).build();
+                .setQuery(prodListRef.orderByChild("category").startAt(relCategory.toLowerCase(Locale.ROOT)), AddProdModel.class).build();
+
+
 
         FirebaseRecyclerAdapter<AddProdModel, RelatedProductsHolder> adapter =
                 new FirebaseRecyclerAdapter<AddProdModel, RelatedProductsHolder>(options) {
@@ -248,5 +289,7 @@ public class ProductDetails extends AppCompatActivity {
         order=findViewById(R.id.order);
 
         related_prod_list = findViewById(R.id.related_prod_list);
+
+        addFavBtn = findViewById(R.id.addToFavBtn);
     }
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="110dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    android:background="@drawable/search_bar_bg"
+    android:weightSum="1"
+    >
+
+        <TextView
+            android:id="@+id/fav_nameView"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="0.5"
+            tools:text="Mac Air Laptop"
+            android:gravity="center"
+            android:textSize="30dp"
+            android:fontFamily="cursive"
+            />
+
+        <TextView
+            android:id="@+id/fav_priceView"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="0.5"
+            tools:text="₹150000"
+            android:gravity="center"
+            android:textSize="30dp"
+            android:fontFamily="cursive"
+            />
+
+
+
+</LinearLayout>
