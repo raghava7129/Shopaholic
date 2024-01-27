@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.raghava.shopaholic.R;
 import com.raghava.shopaholic.interfaces.ItemClickListner;
 
-public class OrdersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class OrdersViewHolder extends RecyclerView.ViewHolder implements ItemClickListner {
 
     private ItemClickListner itemClickListener;
     public TextView orderName, orderDate, orderAddr, orderCity, orderPrice, orderPhone;
@@ -26,7 +26,7 @@ public class OrdersViewHolder extends RecyclerView.ViewHolder implements View.On
     }
 
     @Override
-    public void onClick(View v) {
-        itemClickListener.OnClick(v,getAdapterPosition(),false);
+    public void OnClick(View view, int position, boolean isLongClick) {
+        itemClickListener.OnClick(view,getAdapterPosition(),false);
     }
 }

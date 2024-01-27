@@ -31,11 +31,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.NotNull;
 import com.raghava.shopaholic.PlaceOrderActivity;
 import com.raghava.shopaholic.R;
+import com.raghava.shopaholic.interfaces.DataParcelable;
 import com.raghava.shopaholic.model.Cart;
 import com.raghava.shopaholic.viewholder.CartViewHolder;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class CartActivity extends baseActivity {
@@ -47,9 +50,14 @@ public class CartActivity extends baseActivity {
     RadioButton rb;
     CardView no_item_view;
 
+    int productNumb=1;
+
     FirebaseAuth auth;
 
     ProgressDialog progressDialog;
+
+    Map<String, Map<String,String>> productsMap;
+    Map<String,String> innerMap;
 
     private RecyclerView recyclerView;
     private AppCompatButton nextBtn;
@@ -100,7 +108,11 @@ public class CartActivity extends baseActivity {
                     Toast.makeText(CartActivity.this, "Cannot place order with 0 items", Toast.LENGTH_SHORT).show();
                 }
                 else{
+
+                    DataParcelable dataParcelable = new DataParcelable(productsMap);
+
                     Intent intent = new Intent(CartActivity.this, PlaceOrderActivity.class);
+                    intent.putExtra("dataParcelable",dataParcelable);
                     intent.putExtra("totalAmount", totalprice.getText().toString());
                     startActivity(intent);
                     finish();
@@ -114,6 +126,8 @@ public class CartActivity extends baseActivity {
     protected void onStart() {
         super.onStart();
 
+        innerMap = new HashMap<>();
+
         final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
 
         FirebaseRecyclerOptions<Cart> options = new FirebaseRecyclerOptions.Builder<Cart>()
@@ -124,10 +138,15 @@ public class CartActivity extends baseActivity {
             @Override
             protected void onBindViewHolder(@NonNull @NotNull CartViewHolder holder, int position,@NonNull @NotNull Cart model) {
 //                String name=model.getName().replaceAll("\n"," ");
+                productsMap = new HashMap<>();
                 String name = Objects.toString(model.getName(), "").replaceAll("\n", " ");
 
                 holder.cartProductName.setText(name);
                 holder.cartProductPrice.setText(model.getPrice());
+
+                innerMap.put(name,model.getPrice());
+
+                productsMap.put("product "+productNumb++,innerMap);
 
                 String intPrice= model.getPrice().replace("₹","").replace(",","");
                 overallPrice+=Integer.valueOf(intPrice);

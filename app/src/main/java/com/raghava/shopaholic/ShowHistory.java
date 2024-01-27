@@ -72,6 +72,18 @@ public class ShowHistory extends AppCompatActivity {
                         holder.orderCity.setText(model.getCity());
                         holder.orderDate.setText(model.getDate());
                         holder.orderPrice.setText(model.getTotalAmount());
+
+                        holder.itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                Intent i= new Intent(ShowHistory.this,last_order_products_view.class);
+                                i.putExtra("adapterPosition",holder.getAdapterPosition());
+                                startActivity(i);
+                                overridePendingTransition(0,0);
+                            }
+                        });
+
                     }
 
                     @NonNull

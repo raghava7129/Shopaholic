@@ -34,6 +34,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.raghava.shopaholic.interfaces.DataParcelable;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
 
@@ -46,6 +47,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class PlaceOrderActivity extends AppCompatActivity implements PaymentResultListener {
 
@@ -331,6 +333,32 @@ public class PlaceOrderActivity extends AppCompatActivity implements PaymentResu
                 .child("Orders").child(auth.getCurrentUser().getUid()).child("History")
                 .child(currDate.replaceAll("/","-")+" "+currTime);
 
+        final DatabaseReference ordersRef_Products = FirebaseDatabase.getInstance().getReference()
+                .child("Orders").child(auth.getCurrentUser().getUid()).child("History")
+                .child(currDate.replaceAll("/","-")+" "+currTime).child("products");
+
+
+        Map<String,String> prod_map = new HashMap<>();
+
+        DataParcelable receivedDataParcelable = getIntent().getParcelableExtra("dataParcelable");
+        if (receivedDataParcelable != null) {
+            Map<String, Map<String, String>> receivedProductsMap = receivedDataParcelable.getProductsMap();
+
+            if (receivedProductsMap != null) {
+                for (Map.Entry<String, Map<String, String>> entry : receivedProductsMap.entrySet()) {
+
+                    Map<String, String> innerMap = entry.getValue();
+
+                    for(Map.Entry<String,String> inner : innerMap.entrySet()){
+                        String innerKey = inner.getKey();
+                        String innerValue = inner.getValue();
+                        prod_map.put(innerKey,innerValue);
+                    }
+
+                }
+            }
+        }
+
         HashMap<String, Object> ordersMap= new HashMap<>();
         ordersMap.put("totalAmount",totalAmount);
         ordersMap.put("name",shipName.getText().toString());
@@ -339,6 +367,20 @@ public class PlaceOrderActivity extends AppCompatActivity implements PaymentResu
         ordersMap.put("city",shipCity.getText().toString());
         ordersMap.put("date",currDate);
         ordersMap.put("time",currTime);
+
+        HashMap<String, Object> productsMap = new HashMap<>();
+
+        for (Map.Entry<String, String> entry : prod_map.entrySet()) {
+            String productName = entry.getKey();
+            String productPrice = entry.getValue();
+
+            HashMap<String, Object> productDetails = new HashMap<>();
+            productDetails.put("name", productName);
+            productDetails.put("price", productPrice);
+
+            productsMap.put(productName, productDetails);
+        }
+
 
         ordersRef.updateChildren(ordersMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -363,6 +405,17 @@ public class PlaceOrderActivity extends AppCompatActivity implements PaymentResu
                 else{
                     Toast.makeText(PlaceOrderActivity.this, "unable to update payment data on database",
                             Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        ordersRef.child("products").updateChildren(productsMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(PlaceOrderActivity.this, "Products list added!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(PlaceOrderActivity.this, "Unable to update products data in the database", Toast.LENGTH_SHORT).show();
                 }
             }
         });
