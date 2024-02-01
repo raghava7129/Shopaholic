@@ -1,6 +1,7 @@
 package com.raghava.shopaholic.viewholder;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +15,8 @@ public class favListViewHolder extends RecyclerView.ViewHolder implements View.O
 
     public TextView fav_nameView,fav_priceView;
 
+    public ImageView favImg;
+
     private ItemClickListner itemClickListener;
 
     public favListViewHolder(View itemView) {
@@ -21,6 +24,7 @@ public class favListViewHolder extends RecyclerView.ViewHolder implements View.O
 
         fav_nameView = itemView.findViewById(R.id.fav_nameView);
         fav_priceView = itemView.findViewById(R.id.fav_priceView);
+        favImg = itemView.findViewById(R.id.favImg);
 
     }
 

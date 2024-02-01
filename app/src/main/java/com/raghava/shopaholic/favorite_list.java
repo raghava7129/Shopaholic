@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,14 +18,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.NotNull;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.raghava.shopaholic.model.fav_details;
 import com.raghava.shopaholic.viewholder.favListViewHolder;
 
@@ -35,14 +41,18 @@ import java.util.Objects;
 public class favorite_list extends AppCompatActivity {
 
     RecyclerView fav_list_view;
-    ImageView back_btn;
+    ImageView back_btn,favImg;
     TextView no_item_view;
 
     FirebaseAuth auth;
 
+    FirebaseStorage storage;
+    StorageReference storageRef;
+
     FirebaseRecyclerAdapter firebaseAdapter;
     RecyclerView.LayoutManager layoutManager;
     ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +60,8 @@ public class favorite_list extends AppCompatActivity {
         setContentView(R.layout.activity_favorite_list);
 
         init_views();
+
+        storage = FirebaseStorage.getInstance();
 
         getSupportActionBar().hide();
 
@@ -129,6 +141,37 @@ public class favorite_list extends AppCompatActivity {
                     }
                 });
 
+                String imgPathJpeg = "products/"+model.getName().trim()+".jpeg";
+                String imgPathJpg = "products/"+model.getName().trim()+".jpg";
+
+                StorageReference storageRefJpeg = storage.getReference().child(imgPathJpeg);
+                StorageReference storageRefJpg = storage.getReference().child(imgPathJpg);
+
+                storageRefJpeg.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        // Load the image into the specific ImageView for this item
+                        Glide.with(holder.itemView.getContext()).load(uri).into(holder.favImg);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        storageRefJpg.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                // Load the image into the specific ImageView for this item
+                                Glide.with(holder.itemView.getContext()).load(uri).into(holder.favImg);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(Exception e) {
+                                Toast.makeText(holder.itemView.getContext(), "Image not found", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+
+
             }
 
             @Override
@@ -174,5 +217,6 @@ public class favorite_list extends AppCompatActivity {
         fav_list_view = findViewById(R.id.favorite_list);
         back_btn = findViewById(R.id.back_btn);
         no_item_view = findViewById(R.id.no_item_view);
+        favImg = findViewById(R.id.favImg);
     }
 }

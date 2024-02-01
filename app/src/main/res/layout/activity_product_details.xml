@@ -78,10 +78,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:numStars="5"
-                android:rating="3.5"
+                android:rating="0"
                 android:stepSize="0.5"
                 android:isIndicator="true"
                 android:progressTint="#FFD700"
+
                 />
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -106,7 +107,7 @@
                 android:textStyle="bold"
                 android:fontFamily="casual"
                 android:textColor="#041883"
-                tools:text="3 out-off 5 Rating !!"
+                android:text="NOT RATED"
                 />
 
             <ImageView

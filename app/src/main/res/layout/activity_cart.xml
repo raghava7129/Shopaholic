@@ -24,12 +24,27 @@
 
     </Toolbar>
 
+    <TextView
+        android:id="@+id/couponHeading"
+        android:layout_below="@id/cart_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="use coupon code &quot;shopoholic&quot;\n to avail 5% discount on over-all price"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:fontFamily="casual"
+        android:textSize="18dp"
+        android:background="@drawable/search_bar_bg"
+        android:layout_margin="15dp"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cart_list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_above="@+id/llTotal"
-        android:layout_below="@id/cart_toolbar"
+        android:layout_below="@id/couponHeading"
         android:padding="10dp" />
 
     <androidx.cardview.widget.CardView

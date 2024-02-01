@@ -65,6 +65,8 @@ public class CartActivity extends baseActivity {
     TextView totalprice;
     private int overallPrice=0;
 
+    DatabaseReference couponRef;
+
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,13 @@ public class CartActivity extends baseActivity {
         //setContentView(R.layout.activity_cart);
 
         getSupportActionBar().hide();
+
+        couponRef = FirebaseDatabase.getInstance().getReference();
+        couponRef = couponRef.child("Cart List").child("user View").child("Coupons");
+        Map<String,Object> couponMap = new HashMap<>();
+        couponMap.put("overAllCoupon","shopoholic");  // use this coupon code to avail 5% discount
+                                        // on the overall purchase { use this coupon code at the time of payment !! }
+        couponRef.updateChildren(couponMap);
 
         dialog = new ProgressDialog(this);
         dialog.setCancelable(false);

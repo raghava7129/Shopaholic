@@ -93,7 +93,7 @@ public class AddProduct extends baseActivity {
         confirmAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name= addProdName.getEditableText().toString();
+                String name= addProdName.getEditableText().toString().trim();
                 String price=addProdPrice.getEditableText().toString();
                 String desc=addProdDesc.getEditableText().toString();
                 String category=addProdCategory.getEditableText().toString();
@@ -150,10 +150,10 @@ public class AddProduct extends baseActivity {
         currTime = timeFormat.format(calendar.getTime());
 
         DatabaseReference prodListRef = FirebaseDatabase.getInstance().getReference().child("View All");
-        String name = addProdName.getText().toString();
+        String name = addProdName.getText().toString().trim();
 
         HashMap<String,Object> prodMap = new HashMap<>();
-        prodMap.put("pid",addProdName.getText().toString());
+        prodMap.put("pid",addProdName.getText().toString().trim());
         prodMap.put("name",name);
         prodMap.put("date",currDate);
         prodMap.put("time",currTime);
@@ -173,7 +173,7 @@ public class AddProduct extends baseActivity {
                             Log.i("final URL : ",finalImageUri);
                             prodMap.put("img",finalImageUri);
 
-                            prodListRef.child("user View").child("products").child(addProdName.getText().toString())
+                            prodListRef.child("user View").child("products").child(addProdName.getText().toString().trim())
                                     .updateChildren(prodMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(Task<Void> task) {

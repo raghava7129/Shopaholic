@@ -1,26 +1,35 @@
 package com.raghava.shopaholic;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.raghava.shopaholic.model.fav_details;
 import com.raghava.shopaholic.viewholder.favListViewHolder;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -35,12 +44,17 @@ public class last_order_products_view extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     int adapterPosition;
 
+    FirebaseStorage storage;
+    StorageReference storageRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_last_order_products_view);
 
         init_views();
+
+        storage = FirebaseStorage.getInstance();
 
         getSupportActionBar().hide();
 
@@ -110,6 +124,36 @@ public class last_order_products_view extends AppCompatActivity {
                                        i.putExtra("RateProdPrice",model.getPrice());
                                        startActivity(i);
                                         overridePendingTransition(0,0);
+                                    }
+                                });
+
+                                String imgPathJpeg = "products/"+model.getName().trim()+".jpeg";
+                                String imgPathJpg = "products/"+model.getName().trim()+".jpg";
+
+                                StorageReference storageRefJpeg = storage.getReference().child(imgPathJpeg);
+                                StorageReference storageRefJpg = storage.getReference().child(imgPathJpg);
+
+                                storageRefJpeg.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        // Load the image into the specific ImageView for this item
+                                        Glide.with(holder.itemView.getContext()).load(uri).into(holder.favImg);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception exception) {
+                                        storageRefJpg.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                            @Override
+                                            public void onSuccess(Uri uri) {
+                                                // Load the image into the specific ImageView for this item
+                                                Glide.with(holder.itemView.getContext()).load(uri).into(holder.favImg);
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(Exception e) {
+                                                Toast.makeText(holder.itemView.getContext(), "Image not found", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
                                     }
                                 });
 

@@ -32,8 +32,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.raghava.shopaholic.interfaces.DataParcelable;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
@@ -42,6 +45,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -51,8 +55,8 @@ import java.util.Map;
 
 public class PlaceOrderActivity extends AppCompatActivity implements PaymentResultListener {
 
-    EditText shipName,shipPhone,shipAddress,shipCity;
-    AppCompatButton confirmOrder_btn;
+    EditText shipName,shipPhone,shipAddress,shipCity, couponCode;
+    AppCompatButton confirmOrder_btn,applyCouponBtn;
     TextView priceView;
 
     String totalAmount;
@@ -139,10 +143,12 @@ public class PlaceOrderActivity extends AppCompatActivity implements PaymentResu
         totalAmount = intent.getStringExtra("totalAmount");
         priceView.setText(totalAmount);
 
-        String sample_amount="1"; // this amount will be displayed on the razorpay payment gateway !!
+        String sample_amount=priceView.getText().toString(); // this amount will be displayed on the razorpay payment gateway !!
+
+        String cleanedAmount = sample_amount.replaceAll("[^\\d.]", "");
 
         //convert and round off
-        amount=Math.round(Float.parseFloat(sample_amount)*100);
+        amount=Math.round(Float.parseFloat(cleanedAmount)*100);
 
         confirmOrder_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,6 +156,69 @@ public class PlaceOrderActivity extends AppCompatActivity implements PaymentResu
                 check();
             }
         });
+
+        applyCouponBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                progressDialog.show();
+
+                final DatabaseReference couponRef  = FirebaseDatabase.getInstance().getReference().child("Cart List")
+                        .child("user View").child("Coupons");
+
+                couponRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        if(snapshot.exists()){
+                            String code = snapshot.child("overAllCoupon").getValue(String.class);
+                            if(code != null){
+                                if(code.equals(couponCode.getText().toString().trim())){
+
+                                    String cleanedAmount = sample_amount.replaceAll("[^\\d.]", "");
+
+                                    float floatCurrPrice = Float.parseFloat(cleanedAmount);
+
+                                    amount = (int) (floatCurrPrice * 0.95*100); // converting paise to rupees for razorpay !!
+
+                                    int val = (int) (floatCurrPrice * 0.95); // to display in shopoholic !!
+
+                                    progressDialog.hide();
+
+                                    NumberFormat indianCurrencyFormat = NumberFormat.getCurrencyInstance(new Locale("en", "IN"));
+
+                                    String formattedAmount = indianCurrencyFormat.format(val);
+
+                                    priceView.setText(formattedAmount);
+
+                                    applyCouponBtn.setEnabled(false);  // coupon already applied !!
+
+                                    Toast.makeText(PlaceOrderActivity.this,
+                                            "Coupon code applied!!", Toast.LENGTH_SHORT).show();
+
+                                }
+                                else{
+                                    progressDialog.dismiss();
+                                    Toast.makeText(PlaceOrderActivity.this,
+                                            "Invalid coupon,please try again.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            else{
+                                progressDialog.dismiss();
+                                Toast.makeText(PlaceOrderActivity.this,
+                                        "Sorry, this coupon code has expired.", Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+
+                    }
+                });
+            }
+        });
+
 
     }
 
@@ -308,6 +377,9 @@ public class PlaceOrderActivity extends AppCompatActivity implements PaymentResu
 
         confirmOrder_btn = findViewById(R.id.confirmOrder);
         priceView = findViewById(R.id.cartpricetotal);
+
+        couponCode = findViewById(R.id.couponCode);
+        applyCouponBtn = findViewById(R.id.applyCouponBtn);
     }
 
     @Override

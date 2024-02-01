@@ -46,7 +46,7 @@
         android:id="@+id/scroolView"
         android:layout_below="@id/view_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         >
 
@@ -127,6 +127,33 @@
             android:layout_centerHorizontal="true"
             />
 
+            <EditText
+                android:id="@+id/reviewText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/search_bar_bg"
+                android:padding="10dp"
+                android:layout_margin="15dp"
+                android:hint="your review matters..."
+                tools:text="good product"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="25dp"
+                />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/submit_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="45dp"
+                android:padding="5dp"
+                android:text="Submit your experience"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:fontFamily="casual"
+                android:background="@drawable/search_bar_bg"
+                />
+
 
 
 
@@ -134,20 +161,10 @@
 
 
 
+
+
     </ScrollView>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/submit_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="45dp"
-        android:layout_below="@id/scroolView"
-        android:padding="5dp"
-        android:text="Submit your experience"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:fontFamily="casual"
-        android:background="@drawable/search_bar_bg"
-        />
+
 
 </RelativeLayout>
