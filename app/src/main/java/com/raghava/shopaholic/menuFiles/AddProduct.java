@@ -160,6 +160,7 @@ public class AddProduct extends baseActivity {
         prodMap.put("description",addProdDesc.getText().toString());
         prodMap.put("price","₹"+addProdPrice.getText().toString());
         prodMap.put("category",addProdCategory.getText().toString());
+        prodMap.put("overAllRating",0);
 
         if(setImageUri != null){
             storageReference.putFile(setImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {

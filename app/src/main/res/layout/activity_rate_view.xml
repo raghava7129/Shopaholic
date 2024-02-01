@@ -43,9 +43,10 @@
     </Toolbar>
 
     <ScrollView
+        android:id="@+id/scroolView"
         android:layout_below="@id/view_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         >
 
@@ -126,44 +127,27 @@
             android:layout_centerHorizontal="true"
             />
 
-        <TextView
-        android:id="@+id/review"
-            android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Drop your review below:"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:textSize="25dp"
-        android:layout_marginStart="15dp"
-        android:textColor="#2196F3"
-        android:layout_marginTop="15dp"
-        />
 
-        <EditText
-            android:id="@+id/reviewText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/search_bar_bg"
-            android:padding="15dp"
-            android:layout_margin="15dp"
-            android:hint="Your Review matters..."
-            />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/submit_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:padding="5dp"
-            android:text="Submit your experience"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:fontFamily="casual"
-            android:background="@drawable/search_bar_bg"
-            />
 
         </LinearLayout>
 
+
+
     </ScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/submit_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="45dp"
+        android:layout_below="@id/scroolView"
+        android:padding="5dp"
+        android:text="Submit your experience"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:fontFamily="casual"
+        android:background="@drawable/search_bar_bg"
+        />
 
 </RelativeLayout>

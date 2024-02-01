@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -21,8 +22,11 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.raghava.shopaholic.model.AddProdModel;
 import com.raghava.shopaholic.viewholder.RelatedProductsHolder;
 import com.squareup.picasso.Picasso;
@@ -41,8 +45,13 @@ public class ProductDetails extends AppCompatActivity {
     Intent intent;
     ImageView productImg;
     TextView productName, productCategory, productDesc, productPrice;
-    AppCompatButton order,addFavBtn;
+    AppCompatButton order,addFavBtn,statsBtn;
     Toolbar detailsToolbar;
+
+    RatingBar ratingBar;
+    TextView ratingTitle;
+
+    DatabaseReference databaseReference;
 
     ProgressDialog progressDialog;
 
@@ -52,12 +61,13 @@ public class ProductDetails extends AppCompatActivity {
     RecyclerView related_prod_list;
     String relCategory;
     String name;
-    String checkName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         auth = FirebaseAuth.getInstance();
 
@@ -77,6 +87,8 @@ public class ProductDetails extends AppCompatActivity {
 
         int id = intent.getIntExtra("id",1);
         uniqueId= intent.getStringExtra("uniqueId").replace("\n"," ");
+
+        final DatabaseReference avgRatingRef = databaseReference.child("View All").child("user View").child("products");
 
         if(id == 1){
 //            Toast.makeText(this, "in id =1 block", Toast.LENGTH_SHORT).show();
@@ -125,6 +137,34 @@ public class ProductDetails extends AppCompatActivity {
             String img = intent.getStringExtra("img");
             Picasso.get().load(img).into(productImg);
         }
+
+        statsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ProductDetails.this,stats.class);
+                i.putExtra("productName",productName.getText().toString());
+                startActivity(i);
+                overridePendingTransition(0,0);
+            }
+        });
+
+        avgRatingRef.child(productName.getText().toString()).child("overAllRating").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Object val = snapshot.getValue();
+                if(val !=null){
+                    float avgRating = ((Number) val).floatValue();
+                    ratingBar.setRating(avgRating);
+
+                    ratingTitle.setText(avgRating+" out-off 5 Rating !!");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -291,5 +331,10 @@ public class ProductDetails extends AppCompatActivity {
         related_prod_list = findViewById(R.id.related_prod_list);
 
         addFavBtn = findViewById(R.id.addToFavBtn);
+
+        ratingBar = findViewById(R.id.ratingBar);
+        ratingTitle = findViewById(R.id.ratingTitle);
+
+        statsBtn = findViewById(R.id.statsBtn);
     }
 }
