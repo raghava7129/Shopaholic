@@ -153,7 +153,8 @@ public class HomeActivity extends baseActivity {
                 i.putExtra("name",prod3Name.getText().toString());
                 i.putExtra("price", prod3Price.getText().toString());
                 i.putExtra("uniqueId", prod3Name.getText().toString());
-                i.putExtra("description","DCI-P3 93% Colour Gamut 64-bit Powerful Processor Android TV 9.0 OxygenPlay Bezel-Less Design");
+                i.putExtra("description","VW 80 cm (32 inches) Playwall Frameless Series HD Ready Android Smart LED TV VW3251 (Black)VW 80 cm (32 inches)" +
+                        " Playwall Frameless Series HD Ready Android Smart LED TV VW3251 (Black)");
                 i.putExtra("id", 1);
                 i.putExtra("category", "TV");
                 startActivity(i);

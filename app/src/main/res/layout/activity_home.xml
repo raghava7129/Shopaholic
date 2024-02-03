@@ -225,7 +225,7 @@
                                 android:id="@+id/prod3name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="42dp"
-                                android:text="OnePlus \nSmart TV"
+                                android:text="Vision World VW-A"
                                 android:textColor="@color/black"
                                 android:textSize="13dp" />
 
@@ -233,7 +233,7 @@
                                 android:id="@+id/prod3price"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="₹16,000"
+                                android:text="₹5,699"
                                 android:textColor="@color/black"
                                 android:textSize="23dp" />
 
@@ -267,7 +267,7 @@
                                 android:id="@+id/prod4name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="42dp"
-                                android:text="Air Jordan \nXXXI"
+                                android:text="Air Jordan\nXXXI"
                                 android:textColor="@color/black"
                                 android:textSize="13dp" />
 

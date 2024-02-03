@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Shopaholic" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.Shopaholic" parent="Theme.MaterialComponents.Light">
         <!-- Primary brand color. -->
         <item name="colorTertiary"> @color/appBar</item>
 

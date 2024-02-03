@@ -29,6 +29,9 @@ public class address_error_handling extends AppCompatActivity {
 
         Intent i = getIntent();
         int error_code = i.getIntExtra("errorCode",0);
+
+        String totalAmount = i.getStringExtra("totalAmount");
+
         if(error_code == 0){
             // location error !!
             errorImg.setImageResource(R.drawable.no_gps);
@@ -43,8 +46,10 @@ public class address_error_handling extends AppCompatActivity {
             public void onClick(View v) {
                 if(error_code == 0){
                     if(isLocationEnabled(getApplicationContext())){
-                        startActivity(new Intent(address_error_handling.this,PlaceOrderActivity.class));
+                       Intent i = new Intent(address_error_handling.this,PlaceOrderActivity.class);
+                        i.putExtra("totalAmount",totalAmount);
                         overridePendingTransition(0, 0);
+                        startActivity(i);
                         finish();
                     }else{
                         Toast.makeText(address_error_handling.this, "Check your Location connection or try again !!", Toast.LENGTH_SHORT).show();
@@ -52,8 +57,10 @@ public class address_error_handling extends AppCompatActivity {
                 }
                 else{
                     if(isInternetConnected()){
-                        startActivity(new Intent(address_error_handling.this,PlaceOrderActivity.class));
+                        Intent i = new Intent(address_error_handling.this,PlaceOrderActivity.class);
+                        i.putExtra("totalAmount",totalAmount);
                         overridePendingTransition(0, 0);
+                        startActivity(i);
                         finish();
                     }
                     else{

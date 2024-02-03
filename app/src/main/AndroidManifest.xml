@@ -18,21 +18,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Shopaholic"
         tools:targetApi="31">
+
+
         <activity
             android:name=".stats"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".last_order_products_view"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".RateView"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".favorite_list"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".address_error_handling"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ShowHistory"
             android:exported="false"

@@ -94,6 +94,12 @@ public class PlaceOrderActivity extends AppCompatActivity implements PaymentResu
 
         getSupportActionBar().hide();
 
+        auth = FirebaseAuth.getInstance();
+        intent = getIntent();
+        totalAmount = intent.getStringExtra("totalAmount");
+        priceView.setText(totalAmount);
+
+
         if(isInternetConnected()){
 
             if(isLocationEnabled(this)){
@@ -123,32 +129,33 @@ public class PlaceOrderActivity extends AppCompatActivity implements PaymentResu
             }else{
                 Intent i = new Intent(PlaceOrderActivity.this,address_error_handling.class);
                 i.putExtra("errorCode",0);
+                i.putExtra("totalAmount",totalAmount);
                 startActivity(i);
                 overridePendingTransition(0, 0);
-                finish();
+//                finish();
             }
 
         }else{
             Intent i = new Intent(PlaceOrderActivity.this,address_error_handling.class);
             i.putExtra("errorCode",1);
+            i.putExtra("totalAmount",totalAmount);
             startActivity(i);
             overridePendingTransition(0, 0);
-            finish();
+//            finish();
         }
 
-
-
-        auth = FirebaseAuth.getInstance();
         intent = getIntent();
         totalAmount = intent.getStringExtra("totalAmount");
         priceView.setText(totalAmount);
+
+
 
         String sample_amount=priceView.getText().toString(); // this amount will be displayed on the razorpay payment gateway !!
 
         String cleanedAmount = sample_amount.replaceAll("[^\\d.]", "");
 
         //convert and round off
-        amount=Math.round(Float.parseFloat(cleanedAmount)*100);
+        if(cleanedAmount != "") amount=Math.round(Float.parseFloat(cleanedAmount)*100);
 
         confirmOrder_btn.setOnClickListener(new View.OnClickListener() {
             @Override

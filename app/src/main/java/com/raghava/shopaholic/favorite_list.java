@@ -143,14 +143,17 @@ public class favorite_list extends AppCompatActivity {
 
                 String imgPathJpeg = "products/"+model.getName().trim()+".jpeg";
                 String imgPathJpg = "products/"+model.getName().trim()+".jpg";
+                String imgPath = "products/"+model.getName().trim();
 
                 StorageReference storageRefJpeg = storage.getReference().child(imgPathJpeg);
                 StorageReference storageRefJpg = storage.getReference().child(imgPathJpg);
+                StorageReference storageRef = storage.getReference().child(imgPath);
+
 
                 storageRefJpeg.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        // Load the image into the specific ImageView for this item
+
                         Glide.with(holder.itemView.getContext()).load(uri).into(holder.favImg);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -159,13 +162,24 @@ public class favorite_list extends AppCompatActivity {
                         storageRefJpg.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                // Load the image into the specific ImageView for this item
+
                                 Glide.with(holder.itemView.getContext()).load(uri).into(holder.favImg);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(Exception e) {
-                                Toast.makeText(holder.itemView.getContext(), "Image not found", Toast.LENGTH_SHORT).show();
+                                storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        Glide.with(holder.itemView.getContext()).load(uri).into(holder.favImg);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(Exception e) {
+                                        Toast.makeText(favorite_list.this,model.getName() , Toast.LENGTH_SHORT).show();
+
+                                    }
+                                });
                             }
                         });
                     }

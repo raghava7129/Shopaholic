@@ -141,7 +141,7 @@ public class CartActivity extends baseActivity {
 
         FirebaseRecyclerOptions<Cart> options = new FirebaseRecyclerOptions.Builder<Cart>()
                 .setQuery(cartListRef.child("user View").
-                        child(auth.getCurrentUser().getUid()).child("Products"),Cart.class).build();
+                        child(Objects.requireNonNull(auth.getCurrentUser()).getUid()).child("Products"),Cart.class).build();
 
         FirebaseRecyclerAdapter<Cart,CartViewHolder> adapter = new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options) {
             @Override

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -33,9 +35,20 @@
 
     </Toolbar>
 
+    <ScrollView
+        android:layout_below="@id/ToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/ToolBar"
+            >
+
     <TextView
         android:id="@+id/ProductName"
-        android:layout_below="@id/ToolBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="iPhone 11 Pro"
@@ -46,16 +59,20 @@
         android:textColor="@color/black"
         />
 
-    <TextView
-        android:id="@+id/title1"
-        android:layout_below="@id/ProductName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Customer review"
-        android:layout_marginStart="25dp"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/ProductName"
+                >
+
+                <TextView
+                    android:id="@+id/title1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:text="Customer review"
+                    android:textSize="30dp"
+                    android:textStyle="bold" />
 
     <TextView
         android:id="@+id/title"
@@ -282,5 +299,11 @@
 
 
     </LinearLayout>
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

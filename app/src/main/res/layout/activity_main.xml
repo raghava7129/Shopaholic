@@ -55,20 +55,20 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:padding="5dp"
+            android:padding="10dp"
             android:id="@+id/signInTextView"
             android:text="Already a customer? Sign in"
             android:gravity="center"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:fontFamily="sans-serif"
-            android:textSize="15dp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:textSize="20dp"
             android:background="@drawable/intro_signin"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
+            android:padding="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="15dp"
@@ -77,8 +77,8 @@
             android:gravity="center"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:fontFamily="sans-serif"
-            android:textSize="15dp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:textSize="20dp"
             android:background="@drawable/intro_signup"/>
 
 

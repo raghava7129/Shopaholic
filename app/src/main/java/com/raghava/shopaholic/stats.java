@@ -40,8 +40,7 @@ public class stats extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(stats.this,ProductDetails.class));
-                overridePendingTransition(0,0);
+                onBackPressed();
                 finish();
             }
         });
