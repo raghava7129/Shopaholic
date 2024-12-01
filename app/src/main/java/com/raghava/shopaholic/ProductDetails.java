@@ -129,7 +129,7 @@ public class ProductDetails extends AppCompatActivity {
             productDesc.setText(intent.getStringExtra("description"));
             productImg.setImageResource(this.getResources().getIdentifier(img, "drawable", this.getPackageName()));
         }
-        else{
+        else if(!Objects.equals(intent.getStringExtra("addProdName"), "")){
             productName.setText(intent.getStringExtra("addProdName"));
             productPrice.setText(intent.getStringExtra("addProdPrice"));
             productCategory.setText(intent.getStringExtra("addProdCategory"));

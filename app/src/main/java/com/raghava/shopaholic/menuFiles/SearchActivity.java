@@ -101,7 +101,9 @@ public class SearchActivity extends baseActivity {
                 new FirebaseRecyclerAdapter<AddProdModel, ViewProductsHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull @NotNull ViewProductsHolder holder, int position, @NonNull @NotNull AddProdModel model) {
-                String name = model.getName().replaceAll("\n", " ");
+                String name = model.getName();
+                       if(name != null) name.replaceAll("\n", " ");
+                       else name = "";
                 String price = model.getPrice();
                 String imgUri = model.getImg();
 
@@ -109,14 +111,15 @@ public class SearchActivity extends baseActivity {
                 holder.addProductName.setText(name);
                 holder.addProductPrice.setText(price);
 
+                String finalName = name;
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
                         Intent intent = new Intent(SearchActivity.this, ProductDetails.class);
                         intent.putExtra("id", 4);
-                        intent.putExtra("uniqueId", name);
-                        intent.putExtra("addProdName", name);
+                        intent.putExtra("uniqueId", finalName);
+                        intent.putExtra("addProdName", finalName);
                         intent.putExtra("addProdPrice", price);
                         intent.putExtra("addProdDesc", model.getDescription());
                         intent.putExtra("addProdCategory", model.getCategory());

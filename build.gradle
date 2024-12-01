@@ -1,12 +1,31 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+// Project-level build.gradle
+
 buildscript {
-    dependencies {
-        classpath 'com.google.gms:google-services:4.3.3'
+    repositories {
+//        google()
+//        mavenCentral()
+//        jcenter()
+//        maven { url 'https://jitpack.io' }
+
+
+        google()
+        jcenter();
+        maven { url "https://jitpack.io" }
+        mavenCentral()
+        maven { url 'https://maven.google.com' }
     }
-}// Top-level build file where you can add configuration options common to all sub-projects/modules.
+    dependencies {
+        // Google Services Plugin (Make sure you're using the latest stable version)
+        classpath 'com.google.gms:google-services:4.4.2'
+
+        // Android Gradle Plugin (AGP)
+        classpath 'com.android.tools.build:gradle:8.7.2'  // Update to latest AGP compatible with Gradle 8.x
+    }
+}
+
 plugins {
-    id 'com.android.application' version '7.2.2' apply false
-    id 'com.android.library' version '7.2.2' apply false
+    id 'com.android.application' version '8.0.0' apply false
+    id 'com.android.library' version '8.0.0' apply false
 }
 
 task clean(type: Delete) {

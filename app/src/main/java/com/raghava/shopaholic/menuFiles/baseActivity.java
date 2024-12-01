@@ -27,35 +27,36 @@ public class baseActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 Intent i;
 
-                switch(checkedId){
-                    case R.id.bottom_home:
-                        i=new Intent(getBaseContext(), HomeActivity.class);
-                        startActivity(i);
-                        overridePendingTransition(0, 0);
-                        break;
-                    case R.id.bottom_addprod:
-                        i = new Intent(getBaseContext(), AddProduct.class);
-                        startActivity(i);
-                        overridePendingTransition(0, 0);
-                        break;
-                    case R.id.bottom_search:
-                        i = new Intent(getBaseContext(),SearchActivity.class);
-                        startActivity(i);
-                        overridePendingTransition(0, 0);
-                        break;
-                    case R.id.bottom_cart:
-                        i = new Intent(getBaseContext(), CartActivity.class);
-                        startActivity(i);
-                        overridePendingTransition(0, 0);
-                        break;
-                    case R.id.bottom_profile:
-                        i = new Intent(getBaseContext(), ProfileActivity.class);
-                        startActivity(i);
-                        overridePendingTransition(0, 0);
-                        break;
-                    default:
-                        break;
+
+                if (checkedId == R.id.bottom_home) {
+                    i = new Intent(getBaseContext(), HomeActivity.class);
+                    startActivity(i);
+                    overridePendingTransition(0, 0);
                 }
+
+                else if(checkedId ==  R.id.bottom_addprod) {
+                    i = new Intent(getBaseContext(), AddProduct.class);
+                    startActivity(i);
+                    overridePendingTransition(0, 0);
+                }
+
+                else if(checkedId ==  R.id.bottom_search) {
+                    i = new Intent(getBaseContext(), SearchActivity.class);
+                    startActivity(i);
+                    overridePendingTransition(0, 0);
+                }
+
+                else if(checkedId == R.id.bottom_cart) {
+                i = new Intent(getBaseContext(), CartActivity.class);
+                startActivity(i);
+                overridePendingTransition(0, 0);
+            }
+                    else if (checkedId == R.id.bottom_profile){
+                    i = new Intent(getBaseContext(), ProfileActivity.class);
+                    startActivity(i);
+                    overridePendingTransition(0, 0);
+                }
+
             }
         });
 
